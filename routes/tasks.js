@@ -4,7 +4,7 @@ var mongojs = require('mongojs');
 var db = mongojs('mongodb://userdb:userdb@ds163718.mlab.com:63718/cferrerdb', ['tasks']);
 //mongodb://cferrer:cferrer123@ds163718.mlab.com:63718/cferrerdb
 // Get All Tasks
-router.get('/tasks',function(req, res, next){
+router.get('/',function(req, res, next){
     db.tasks.find(function(err, tasks){
         if(err){
             res.send(err);
@@ -16,7 +16,7 @@ router.get('/tasks',function(req, res, next){
 });
 
 // Get Single Task
-router.get('/task/:id', function(req, res, next){
+router.get('/:id', function(req, res, next){
     db.tasks.findOne({_id: mongojs.ObjectId(req.params.id)}, function(err, task){
         if(err){
             res.send(err);
@@ -26,7 +26,7 @@ router.get('/task/:id', function(req, res, next){
 });
 
 //Save Task
-router.post('/task', function(req, res, next){
+router.post('/', function(req, res, next){
     var task = req.body;
     console.log('save task ' + JSON.stringify(req.body));
     if(!task.Title){
@@ -45,7 +45,7 @@ router.post('/task', function(req, res, next){
 });
 
 // Delete Task
-router.delete('/task/:id', function(req, res, next){
+router.delete('/:id', function(req, res, next){
     console.log('here delete '+req.params.id);
     db.tasks.remove({_id: mongojs.ObjectId(req.params.id)}, function(err, task){
         if(err){
@@ -57,7 +57,7 @@ router.delete('/task/:id', function(req, res, next){
 });
 
 // Update Task
-router.put('/task/:id', function(req, res, next){
+router.put('/:id', function(req, res, next){
     var task = req.body;
     var updTask = {
         Title:task.Title,
