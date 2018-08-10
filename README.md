@@ -1,5 +1,12 @@
 # Nodejs boilerplate for MongoDB
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.3.2.
+    server.js file is use to configure the server side.
+
+# folder routes: 
+    to get tasks from MongoDb
+
+#task.js:
+to connect with MongoDB.
+
 
 
