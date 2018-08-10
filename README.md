@@ -5,7 +5,7 @@
 # folder routes: 
     to get tasks from MongoDb
 
-#task.js:
+# routes/tasks.js:
 to connect with MongoDB.
 
 
