@@ -20,6 +20,6 @@
     "mongojs": "^2.5.0"
   },
   "devDependencies": {
-    "nodemon": "^1.17.0"
+    "nodemon": "^1.18.3"
   }
 }
