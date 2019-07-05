@@ -46,7 +46,7 @@ router.post('/', function(req, res, next){
 
 // Delete Task
 router.delete('/:id', function(req, res, next){
-    console.log('here delete '+req.params.id);
+    console.log('deleting  ', req.params.id);
     db.tasks.remove({_id: mongojs.ObjectId(req.params.id)}, function(err, task){
         if(err){
              console.log(err);

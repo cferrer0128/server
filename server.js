@@ -15,7 +15,7 @@ app.use(express.urlencoded({extended: false}));
 
 // routes
 //app.use('/', indexRoutes);
-app.use('/tasks', tasksRoutes);
+app.use('/api', tasksRoutes);
 
 // static files
 
