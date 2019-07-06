@@ -1,17 +1,17 @@
 var express = require('express');
 var router = express.Router();
 var mongojs = require('mongojs');
-
+require('dotenv').config()
 const jwt = require('jsonwebtoken');
 
-var db = mongojs('mongodb://userdb:userdb@ds163718.mlab.com:63718/cferrerdb', ['tasks']);
+var db = mongojs(process.env.MONGODB_URI, ['tasks']);
 //mongodb://cferrer:cferrer123@ds163718.mlab.com:63718/cferrerdb
 
 //jwt calls..
 
 router.post('/login',function(req,res) {
     let user = req.body;
-    jwt.sign({user},'dotenv',(err,token)=>{
+    jwt.sign({user},process.env.JWT_SECRET,{expiresIn:'3000s'},(err,token)=>{
         res.json({
             token,
             user
@@ -33,12 +33,25 @@ router.get('/',function(req, res, next){
 
 // Get Single Task
 router.get('/:id', verifyToken, (req, res, next) => {
-    db.tasks.findOne({_id: mongojs.ObjectId(req.params.id)}, function(err, task){
+
+    jwt.verify(req.token,process.env.JWT_SECRET,(err,authData) =>{
         if(err){
-            res.send(err);
+            res.sendStatus(403)
+        }else{
+            db.tasks.findOne({_id: mongojs.ObjectId(req.params.id)}, function(err, task){
+                if(err){
+                    res.send(err);
+                }
+                res.json({
+                    message:'Post Request success',
+                    task,
+                    authData
+                });
+            });
         }
-        res.json(task);
-    });
+    })
+
+   
 });
 
 function verifyToken(req,res,next){
@@ -65,10 +78,14 @@ router.post('/', verifyToken, function(req, res, next){
             res.sendStatus(403)
         }else{
             db.tasks.save(task, (err, task) =>{
-                        if(err){
-                            res.send(err);
-                        }
-                        res.json(task);
+                if(err){
+                    res.send(err);
+                }
+                res.json({
+                    message:'Post Request success',
+                    task,
+                    authData
+                });
             });
         }
     })
