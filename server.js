@@ -4,6 +4,8 @@ const indexRoutes = require('./routes/index');
 
 const tasksRoutes = require('./routes/tasks');
 
+const contact = require('./routes/contact');
+
 const app = express();
 
 // settings
@@ -18,7 +20,8 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'views')));
 // routes
 app.use('/', indexRoutes);
-app.use('/api', tasksRoutes);
+app.use('/tasks', tasksRoutes);
+app.use('/contacts', contact);
 
 // static files
 
